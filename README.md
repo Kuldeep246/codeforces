@@ -52,9 +52,6 @@ Codeforces Analyzer is a web application that visualizes Codeforces contest perf
 
 Contributions are welcome! Open issues or submit pull requests to improve the application.
 
-## License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
