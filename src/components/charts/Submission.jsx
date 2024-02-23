@@ -5,7 +5,7 @@ import { Chart } from 'react-chartjs-2';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
-import { handleState } from '../../store/atoms';
+import { apidataState, handleState } from '../../store/atoms';
 import {colors,hoverColors} from '../../utils/colors';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +22,7 @@ const Submission = () => {
     ],
   });
   const handle=useRecoilValue(handleState);
+  const apiData=useRecoilValue(apidataState)
 
 
 
@@ -29,9 +30,7 @@ const Submission = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=3000`); 
-
-        const apiData=response.data.result;
+        
        
         const verdict = apiData.map(item => item.verdict);
 

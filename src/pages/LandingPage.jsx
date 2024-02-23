@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useRecoilState} from 'recoil';
-import { handleState} from '../store/atoms';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom'
+import { apidataState, handleState } from "../store/atoms";
+import axios from "axios";
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [handle, setHandle] = useRecoilState(handleState);
-
+  const [apiData,setApiData]=useRecoilState(apidataState);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+   
     try {
-      const response = await axios.get(`https://codeforces.com/api/user.info?handles=${handle}`);
+      const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`);
+
+      const response1 = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`);
+
+      setApiData(response1.data.result);
+      
 
       if (response.data.status === 'OK') {
         const userInfo = response.data.result[0];
@@ -28,9 +35,13 @@ const LandingPage = () => {
       console.error('Error fetching user information:', error.message);
     } finally {
       setLoading(false);
-      
+
     }
   };
+
+
+
+
 
   return (
     <div className="flex flex-col items-center justify-center min-w-96 ">

@@ -4,13 +4,14 @@ import { Chart as ChartJS, Colors } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
-import { handleState } from '../../store/atoms';
+import { apidataState, handleState } from '../../store/atoms';
 import { colors, hoverColors } from '../../utils/colors';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Languages = () => {
   const handle = useRecoilValue(handleState);
+  const apiData=useRecoilValue(apidataState);
   const [chartData, setChartData] = useState({
     labels: ['Category 1', 'Category 2', 'Category 3'],
     datasets: [
@@ -25,10 +26,6 @@ const Languages = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=10000`); // Replace with your actual API endpoint
-
-
-        const apiData = response.data.result;
 
 
         const programmingLanguages = apiData.map(item => item.programmingLanguage);
