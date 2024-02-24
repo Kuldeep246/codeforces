@@ -7,13 +7,14 @@ import RankandRaiting from '../components/charts/RankandRaiting';
 import { handleState } from '../store/atoms';
 import { useRecoilValue } from 'recoil';
 import AnimatedText from '../components/AnimatedText';
+import Unsolved from '../components/Unsolved';
 
 const Dashboard = () => {
   return (
     <div className='w-full z-10 relative'>
       <div className='w-full bg-[#001d3d] h-48'>
         <div className='w-full max-w-screen-xl mx-auto p-4'>
-          <AnimatedText/>
+          <AnimatedText />
         </div>
         <div className='top-0 right-8 absolute '>
           <RankandRaiting />
@@ -35,6 +36,11 @@ const Dashboard = () => {
       <div className='flex p-5 justify-center w-full max-w-screen-xl mx-auto'>
         <ProblemsRaiting />
       </div>
+      <div className="divider"></div>
+      <div className=' flex p-5 justify-center w-full max-w-screen-xl mx-auto'>
+        <Unsolved />
+      </div>
+      <div className="divider"></div>
     </div>
   );
 };
