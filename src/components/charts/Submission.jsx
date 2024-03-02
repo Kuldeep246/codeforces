@@ -77,7 +77,7 @@ const Submission = () => {
         fullSize: true,
       },
     },
-    aspectRatio: 1.2,
+    aspectRatio: 1.1,
   };
 
 

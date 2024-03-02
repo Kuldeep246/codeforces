@@ -3,25 +3,26 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom'
 import { apidataState, handleState } from "../store/atoms";
 import axios from "axios";
+import Background from './Backgound';
 
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [handle, setHandle] = useRecoilState(handleState);
-  const [apiData,setApiData]=useRecoilState(apidataState);
+  const [apiData, setApiData] = useRecoilState(apidataState);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-   
+
     try {
       const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`);
 
       const response1 = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`);
 
       setApiData(response1.data.result);
-      
+
 
       if (response.data.status === 'OK') {
         const userInfo = response.data.result[0];
@@ -39,14 +40,14 @@ const LandingPage = () => {
     }
   };
 
-
-
-
-
   return (
     <div className="flex flex-col items-center justify-center min-w-96 ">
-      <div className="mt-16 p-6 bg-gray-500 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-30">
-        <form onSubmit={handleFormSubmit}>
+      <div className="absolute inset-0 z-0 flex  items-center justify-center ">
+        <Background />
+      </div>
+      
+      <div className="mt-16 h-44 w-80 p-6 bg-gray-700 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-30">
+        <form className='' onSubmit={handleFormSubmit}>
           <label className="form-control w-full max-w-md">
             <input
               type="text"
@@ -66,6 +67,7 @@ const LandingPage = () => {
         </form>
       </div>
     </div>
+
   );
 };
 

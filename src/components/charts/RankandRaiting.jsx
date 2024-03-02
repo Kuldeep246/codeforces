@@ -4,21 +4,24 @@ import { useRecoilValue } from 'recoil';
 import { handleState } from '../../store/atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import  { Card1, Card2 } from '../Card';
 
 const RankandRating = () => {
   const [maxRating, setMaxRating] = useState(Number.MIN_SAFE_INTEGER);
   const [minRank, setMinRank] = useState(Number.MAX_SAFE_INTEGER);
+  const [liveRating, setLiveRating] = useState(null);
   const [loading, setLoading] = useState(true);
-  const handle = useRecoilValue(handleState);
-
+  const userHandle = useRecoilValue(handleState);
 
   useEffect(() => {
     const fetchHighestRatingData = async () => {
       try {
-        console.log(handle);
-        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${handle}`);
+        console.log(userHandle);
+        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${userHandle}`);
         const contests = response.data.result;
+
+        const x = contests.length;
+        setLiveRating(contests[x - 1].newRating);
 
         let newMaxRating = Number.MIN_SAFE_INTEGER;
         let newMinRank = Number.MAX_SAFE_INTEGER;
@@ -36,16 +39,17 @@ const RankandRating = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        toast.error('Error fetching data: ' + error.message, {
+        const errorMessage = error.response ? error.response.data.comment : error.message;
+        toast.error(`Error fetching data: ${errorMessage}`, {
           position: 'bottom-right',
           autoClose: 4000,
-        })
+        });
         setLoading(false);
       }
     };
 
     fetchHighestRatingData();
-  }, [handle]);
+  }, [userHandle]);
 
   return (
     <div>
@@ -54,17 +58,12 @@ const RankandRating = () => {
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <div className='h-48 bg-[#001d3d] w-48 rounded-lg p-3'>
-          <span className='font-sans-serif text-2xl font-semibold text-[#eaecc6ee]'>Highest Rating</span>
-          <br />
-          <div className='font-semibold text-[#eaecc6ee] '>{maxRating}</div>
-          <span className='font-sans-serif font-semibold text-2xl text-[#eaecc6ee]'>Best Rank</span>
-          <br />
-          <div className='font-semibold text-[#eaecc6ee]'>{minRank}</div>
-          <br />
+        <div className="grid grid-cols-3 gap-4 w-full">
+          <Card2 title="Live Rating" description={liveRating} />
+          <Card2 title="Highest Rating" description={maxRating} />
+          <Card1 title="Best Rank" description={minRank} />
         </div>
-      )
-      }
+      )}
     </div>
   );
 };

@@ -73,7 +73,7 @@ const Languages = () => {
 
       },
     },
-    aspectRatio: 1.2,
+    aspectRatio: 1,
 
   };
 

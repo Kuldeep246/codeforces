@@ -82,7 +82,7 @@ const Tags = () => {
       },
 
     },
-    aspectRatio: 1.6,
+    aspectRatio: 1.2,
   };
 
   return (
